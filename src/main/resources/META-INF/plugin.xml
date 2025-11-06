@@ -8,8 +8,18 @@
 
     <resource-bundle>messages.MyBundle</resource-bundle>
 
-    <extensions defaultExtensionNs="com.intellij">
-        <toolWindow factoryClass="com.github.nikolajovic99.microgenerator.toolWindow.MyToolWindowFactory" id="MyToolWindow"/>
-        <postStartupActivity implementation="com.github.nikolajovic99.microgenerator.startup.MyProjectActivity" />
-    </extensions>
+    <extensions defaultExtensionNs="com.intellij" />
+
+    <actions>
+        <!-- Glavna akcija: Generate skeleton from YAML -->
+        <action id="MicroGen.GenerateSkeleton"
+                class="com.github.nikolajovic99.microgenerator.actions.GenerateSkeletonAction"
+                text="Generate Microservice (Skeleton) from YAML"
+                description="Generate a Spring Boot skeleton project from a YAML spec">
+            <!-- Stavi je u Tools meni; pojaviće se na dnu -->
+            <add-to-group group-id="ToolsMenu" anchor="last"/>
+            <!-- (Opcionalno) shortkut u default keymapu -->
+            <!-- <keyboard-shortcut keymap="$default" first-keystroke="ctrl alt G"/> -->
+        </action>
+    </actions>
 </idea-plugin>

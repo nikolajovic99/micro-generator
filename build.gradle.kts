@@ -51,6 +51,11 @@ dependencies {
 
         testFramework(TestFrameworkType.Platform)
     }
+
+    // Freemarker template engine
+    implementation("org.freemarker:freemarker:2.3.32")
+
+    implementation("org.yaml:snakeyaml:2.2")
 }
 
 // Configure IntelliJ Platform Gradle Plugin - read more: https://plugins.jetbrains.com/docs/intellij/tools-intellij-platform-gradle-plugin-extension.html
