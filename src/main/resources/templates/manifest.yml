@@ -1,4 +1,3 @@
-# ${artifact} = demo
 staticFiles:
   - from: "static/_dot_gitignore"
     to:   "${artifact}/.gitignore"
@@ -23,8 +22,6 @@ dynamic:
   - template: "dynamic/application.properties.ftl"
     to:       "${artifact}/src/main/resources/application.properties"
 
-  # ${basePackagePath} = com/example/demo
-  # ${appBaseName} = Demo
   - template: "dynamic/Application.java.ftl"
     to:       "${artifact}/src/main/java/${basePackagePath}/${appBaseName}Application.java"
 
@@ -39,3 +36,39 @@ dynamic:
 
   - template: "dynamic/MessageResponse.java.ftl"
     to:       "${artifact}/src/main/java/${basePackagePath}/dto/response/MessageResponse.java"
+
+  - template: "dynamic/models/Entity.java.ftl"
+    repeat:   "models"
+    to:       "${artifact}/src/main/java/${basePackagePath}/model/${modelName}.java"
+
+  - template: "dynamic/models/Repository.java.ftl"
+    repeat:   "models"
+    to:       "${artifact}/src/main/java/${basePackagePath}/repository/${modelName}Repository.java"
+
+  - template: "dynamic/models/DTO.java.ftl"
+    repeat:   "models"
+    to:       "${artifact}/src/main/java/${basePackagePath}/dto/${modelNameLower}/${modelName}DTO.java"
+
+  - template: "dynamic/models/CreateRequest.java.ftl"
+    repeat:   "models"
+    to:       "${artifact}/src/main/java/${basePackagePath}/dto/${modelNameLower}/Create${modelName}Request.java"
+
+  - template: "dynamic/models/UpdateRequest.java.ftl"
+    repeat:   "models"
+    to:       "${artifact}/src/main/java/${basePackagePath}/dto/${modelNameLower}/Update${modelName}Request.java"
+
+  - template: "dynamic/models/Mapper.java.ftl"
+    repeat:   "models"
+    to:       "${artifact}/src/main/java/${basePackagePath}/mapper/${modelName}Mapper.java"
+
+  - template: "dynamic/models/Service.java.ftl"
+    repeat:   "models"
+    to:       "${artifact}/src/main/java/${basePackagePath}/service/${modelNameLower}/${modelName}Service.java"
+
+  - template: "dynamic/models/ServiceImpl.java.ftl"
+    repeat:   "models"
+    to:       "${artifact}/src/main/java/${basePackagePath}/service/${modelNameLower}/${modelName}ServiceImpl.java"
+
+  - template: "dynamic/models/Controller.java.ftl"
+    repeat:   "models"
+    to:       "${artifact}/src/main/java/${basePackagePath}/controller/${modelName}Controller.java"

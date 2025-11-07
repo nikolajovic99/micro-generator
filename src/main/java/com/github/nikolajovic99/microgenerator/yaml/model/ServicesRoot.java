@@ -6,7 +6,11 @@ public final class ServicesRoot {
 
     private List<ServiceSpec> services;
 
-    public List<ServiceSpec> getServices() { return services; }
+    public List<ServiceSpec> getServices() {
+        return services;
+    }
 
-    public void setServices(List<ServiceSpec> services) { this.services = services; }
+    public void setServices(List<ServiceSpec> services) {
+        this.services = services;
+    }
 }

@@ -6,25 +6,24 @@ import java.util.*;
 public final class VarsMapper {
 
     public static Map<String,Object> toVars(ServiceSpec s) {
-        Map<String,Object> v = new HashMap<>();
+        Map<String,Object> vars = new HashMap<>();
 
-        v.put("name", s.getName());
-        v.put("group", s.getGroup());
-        v.put("artifact", s.getArtifact());
-        v.put("version", s.getVersion());
-        v.put("description", s.getDescription());
-        v.put("port", s.getPort());
-        v.put("logging", s.getLogging());
+        vars.put("name", s.getName());
+        vars.put("group", s.getGroup());
+        vars.put("artifact", s.getArtifact());
+        vars.put("version", s.getVersion());
+        vars.put("description", s.getDescription());
+        vars.put("port", s.getPort());
+        vars.put("logging", s.getLogging());
 
-        String basePackage = s.getGroup() + "." + s.getArtifact();                  // dotted
-        String basePackagePath = basePackage.replace('.', '/');     // slashes
-        v.put("basePackage", basePackage);                                          // za .ftl
-        v.put("basePackagePath", basePackagePath);                                  // za manifest
+        String basePackage = s.getGroup() + "." + s.getArtifact();
+        vars.put("basePackage", basePackage);
 
-        String appBaseName = toPascal(s.getArtifact());                             // Demo
+        String basePackagePath = basePackage.replace('.', '/');
+        vars.put("basePackagePath", basePackagePath);
 
-        v.put("appBaseName", appBaseName);                                          // koristiš u manifestu
-        v.put("AppClass", appBaseName + "Application");                             // ako ti zatreba u .ftl
+        String appBaseName = toPascal(s.getArtifact());
+        vars.put("appBaseName", appBaseName);
 
         if (s.getDatabase() != null) {
             Map<String,Object> db = new HashMap<>();
@@ -33,25 +32,62 @@ public final class VarsMapper {
             db.put("name", s.getDatabase().getName());
             db.put("username", s.getDatabase().getUsername());
             db.put("password", s.getDatabase().getPassword());
-            v.put("database", db);
+
+            vars.put("database", db);
         }
 
         if (s.getDependencies() != null) {
             List<Map<String,Object>> deps = new ArrayList<>();
 
             for (DependencySpec d : s.getDependencies()) {
-                Map<String,Object> m = new HashMap<>();
-                m.put("groupId", d.getGroupId());
-                m.put("artifactId", d.getArtifactId());
-                if (d.getScope()!=null && !d.getScope().isBlank()) m.put("scope", d.getScope());
-                if (d.getVersion()!=null && !d.getVersion().isBlank()) m.put("version", d.getVersion());
-                deps.add(m);
+                Map<String,Object> map = new HashMap<>();
+
+                map.put("groupId", d.getGroupId());
+                map.put("artifactId", d.getArtifactId());
+
+                if (d.getScope()!=null && !d.getScope().isBlank()) map.put("scope", d.getScope());
+                if (d.getVersion()!=null && !d.getVersion().isBlank()) map.put("version", d.getVersion());
+
+                deps.add(map);
             }
 
-            v.put("dependencies", deps);
+            vars.put("dependencies", deps);
         }
 
-        return v;
+        var modelMaps = new ArrayList<Map<String,Object>>();
+
+        if (s.getModels() != null) {
+            for (var m : s.getModels()) {
+                var map = new HashMap<String,Object>();
+
+                String modelName = toPascal(m.getName());
+                map.put("modelName", modelName);
+
+                String modelNameLower = m.getName().toLowerCase().replaceAll("[^a-z0-9]+", "");
+                map.put("modelNameLower", modelNameLower);
+
+                map.put("tableName", m.getTable());
+
+                var fieldMaps = new ArrayList<Map<String,Object>>();
+
+                for (var f : m.getFields()) {
+                    fieldMaps.add(Map.of(
+                            "name", f.getName(),
+                            "type", f.getType(),
+                            "columnName", toColumnName(f.getName()),
+                            "fieldNamePascal", toPascal(f.getName())
+                    ));
+                }
+
+                map.put("fields", fieldMaps);
+
+                modelMaps.add(map);
+            }
+        }
+
+        vars.put("models", modelMaps);
+
+        return vars;
     }
 
     private static String toPascal(String s) {
@@ -67,5 +103,13 @@ public final class VarsMapper {
         }
 
         return sb.toString();
+    }
+
+    private static String toColumnName(String fieldName) {
+        if (fieldName == null || fieldName.isBlank()) return "";
+
+        return fieldName
+                .replaceAll("([a-z0-9])([A-Z])", "$1_$2")
+                .toLowerCase();
     }
 }

@@ -11,8 +11,9 @@ public final class ServiceSpec {
     private String description;
     private Integer port;
     private String logging;
-    private DatabaseSpec database;
     private List<DependencySpec> dependencies;
+    private DatabaseSpec database;
+    private java.util.List<ModelSpec> models;
 
     public String getName() {
         return name;
@@ -70,6 +71,14 @@ public final class ServiceSpec {
         this.logging = logging;
     }
 
+    public List<DependencySpec> getDependencies() {
+        return dependencies;
+    }
+
+    public void setDependencies(List<DependencySpec> dependencies) {
+        this.dependencies = dependencies;
+    }
+
     public DatabaseSpec getDatabase() {
         return database;
     }
@@ -78,11 +87,11 @@ public final class ServiceSpec {
         this.database = database;
     }
 
-    public List<DependencySpec> getDependencies() {
-        return dependencies;
+    public List<ModelSpec> getModels() {
+        return models;
     }
 
-    public void setDependencies(List<DependencySpec> dependencies) {
-        this.dependencies = dependencies;
+    public void setModels(List<ModelSpec> models) {
+        this.models = models;
     }
 }
