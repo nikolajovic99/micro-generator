@@ -1,7 +1,11 @@
 package com.github.nikolajovic99.microgenerator.mapping;
 
 import com.github.nikolajovic99.microgenerator.yaml.model.*;
-import java.util.*;
+
+import java.util.Map;
+import java.util.HashMap;
+import java.util.List;
+import java.util.ArrayList;
 
 public final class VarsMapper {
 
@@ -26,7 +30,7 @@ public final class VarsMapper {
         vars.put("appBaseName", appBaseName);
 
         if (s.getDatabase() != null) {
-            Map<String,Object> db = new HashMap<>();
+            Map<String, Object> db = new HashMap<>();
 
             db.put("type", s.getDatabase().getType());
             db.put("name", s.getDatabase().getName());
@@ -37,16 +41,16 @@ public final class VarsMapper {
         }
 
         if (s.getDependencies() != null) {
-            List<Map<String,Object>> deps = new ArrayList<>();
+            List<Map<String, Object>> deps = new ArrayList<>();
 
             for (DependencySpec d : s.getDependencies()) {
-                Map<String,Object> map = new HashMap<>();
+                Map<String, Object> map = new HashMap<>();
 
                 map.put("groupId", d.getGroupId());
                 map.put("artifactId", d.getArtifactId());
 
-                if (d.getScope()!=null && !d.getScope().isBlank()) map.put("scope", d.getScope());
-                if (d.getVersion()!=null && !d.getVersion().isBlank()) map.put("version", d.getVersion());
+                if (d.getScope() != null && !d.getScope().isBlank()) map.put("scope", d.getScope());
+                if (d.getVersion() != null && !d.getVersion().isBlank()) map.put("version", d.getVersion());
 
                 deps.add(map);
             }
@@ -98,6 +102,7 @@ public final class VarsMapper {
 
         for (String p : parts) {
             if (p.isEmpty()) continue;
+
             sb.append(Character.toUpperCase(p.charAt(0)));
             if (p.length() > 1) sb.append(p.substring(1));
         }

@@ -16,11 +16,15 @@ public final class ResourceCopier {
             if ("755".equals(mode)) {
                 try {
                     Files.setPosixFilePermissions(out, Set.of(
-                            PosixFilePermission.OWNER_READ, PosixFilePermission.OWNER_WRITE, PosixFilePermission.OWNER_EXECUTE,
-                            PosixFilePermission.GROUP_READ, PosixFilePermission.GROUP_EXECUTE,
-                            PosixFilePermission.OTHERS_READ, PosixFilePermission.OTHERS_EXECUTE
+                            PosixFilePermission.OWNER_READ,
+                            PosixFilePermission.OWNER_WRITE,
+                            PosixFilePermission.OWNER_EXECUTE,
+                            PosixFilePermission.GROUP_READ,
+                            PosixFilePermission.GROUP_EXECUTE,
+                            PosixFilePermission.OTHERS_READ,
+                            PosixFilePermission.OTHERS_EXECUTE
                     ));
-                } catch (UnsupportedOperationException ignore) { /* Windows */ }
+                } catch (UnsupportedOperationException ignore) {}
             }
         } catch (Exception e) { throw new RuntimeException(e); }
     }

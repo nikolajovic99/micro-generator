@@ -1,3 +1,4 @@
+<#assign db = database.type>
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
@@ -32,6 +33,9 @@
 	</scm>
 	<properties>
 		<java.version>21</java.version>
+    <#if db == "oracle">
+        <oracle.jdbc.version>23.26.0.0.0</oracle.jdbc.version>
+    </#if>
 	</properties>
 
 	<dependencies>
@@ -66,7 +70,45 @@
 			<artifactId>spring-boot-starter-actuator</artifactId>
 		</dependency>
 
-<#if dependencies??>
+    <#if db == "postgresql">
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+    <#elseif db == "mysql">
+        <dependency>
+            <groupId>com.mysql</groupId>
+            <artifactId>mysql-connector-j</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+    <#elseif db == "mariadb">
+        <dependency>
+            <groupId>org.mariadb.jdbc</groupId>
+            <artifactId>mariadb-java-client</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+    <#elseif db == "sqlserver">
+        <dependency>
+            <groupId>com.microsoft.sqlserver</groupId>
+            <artifactId>mssql-jdbc</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+    <#elseif db == "oracle">
+        <dependency>
+            <groupId>com.oracle.database.jdbc</groupId>
+            <artifactId>ojdbc11</artifactId>
+            <version>${oracle.jdbc.version}</version>
+            <scope>runtime</scope>
+        </dependency>
+    <#elseif database.type == "mongodb">
+        <dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-mongodb</artifactId>
+        </dependency>
+    </#if>
+
+    <#if dependencies??>
     <#list dependencies as d>
         <dependency>
             <groupId>${d.groupId}</groupId>
@@ -79,7 +121,7 @@
             </#if>
         </dependency>
     </#list>
-</#if>
+    </#if>
 
 	</dependencies>
 

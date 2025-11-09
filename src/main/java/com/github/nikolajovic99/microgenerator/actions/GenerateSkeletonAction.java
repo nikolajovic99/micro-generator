@@ -6,12 +6,14 @@ import com.github.nikolajovic99.microgenerator.yaml.YamlLoader;
 import com.github.nikolajovic99.microgenerator.yaml.model.ServiceSpec;
 import com.github.nikolajovic99.microgenerator.yaml.model.ServicesRoot;
 import com.github.nikolajovic99.microgenerator.util.DesktopPathResolver;
+
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.fileChooser.FileChooserDescriptor;
 import com.intellij.openapi.fileChooser.FileChooserFactory;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.Messages;
+
 import org.jetbrains.annotations.NotNull;
 import java.nio.file.Path;
 import java.util.List;
@@ -49,11 +51,10 @@ public final class GenerateSkeletonAction extends AnAction {
                 return;
             }
 
-            //Path projectRoot = Path.of(project.getBasePath());
             Path projectRoot = DesktopPathResolver.resolveDesktop();
 
             for (ServiceSpec s : list) {
-                Map<String,Object> vars = VarsMapper.toVars(s);
+                Map<String, Object> vars = VarsMapper.toVars(s);
                 ProjectScaffold.generate(project, projectRoot, vars);
             }
 

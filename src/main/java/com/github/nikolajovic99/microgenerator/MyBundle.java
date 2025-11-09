@@ -3,6 +3,7 @@ package com.github.nikolajovic99.microgenerator;
 import com.intellij.DynamicBundle;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.PropertyKey;
+
 import java.util.function.Supplier;
 
 public final class MyBundle extends DynamicBundle {

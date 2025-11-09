@@ -4,11 +4,11 @@ import java.util.Map;
 
 public final class Interp {
 
-    public static String sub(String s, Map<String,Object> vars) {
+    public static String sub(String s, Map<String, Object> vars) {
         String out = s;
 
-        for (var e : vars.entrySet()) {
-            out = out.replace("${" + e.getKey() + "}", String.valueOf(e.getValue()));
+        for (var v : vars.entrySet()) {
+            out = out.replace("${" + v.getKey() + "}", String.valueOf(v.getValue()));
         }
 
         return out;

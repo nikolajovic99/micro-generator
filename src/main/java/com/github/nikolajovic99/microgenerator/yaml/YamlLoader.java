@@ -1,9 +1,11 @@
 package com.github.nikolajovic99.microgenerator.yaml;
 
 import com.github.nikolajovic99.microgenerator.yaml.model.ServicesRoot;
+
 import org.yaml.snakeyaml.LoaderOptions;
 import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.constructor.Constructor;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UncheckedIOException;

@@ -13,7 +13,7 @@ public final class ServiceSpec {
     private String logging;
     private List<DependencySpec> dependencies;
     private DatabaseSpec database;
-    private java.util.List<ModelSpec> models;
+    private List<ModelSpec> models;
 
     public String getName() {
         return name;

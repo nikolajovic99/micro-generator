@@ -3,6 +3,7 @@ package com.github.nikolajovic99.microgenerator.scaffold;
 import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.LoaderOptions;
 import org.yaml.snakeyaml.constructor.Constructor;
+
 import java.io.InputStream;
 
 public final class ManifestLoader {
@@ -14,7 +15,6 @@ public final class ManifestLoader {
             }
 
             LoaderOptions options = new LoaderOptions();
-            // (opciono) options.setAllowDuplicateKeys(false);
 
             Yaml yaml = new Yaml(new Constructor(Manifest.class, options));
             Manifest m = yaml.load(in);

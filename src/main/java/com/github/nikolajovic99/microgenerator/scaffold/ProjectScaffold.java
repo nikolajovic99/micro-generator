@@ -1,8 +1,10 @@
 package com.github.nikolajovic99.microgenerator.scaffold;
 
 import com.github.nikolajovic99.microgenerator.codegen.TemplateEngine;
+
 import com.intellij.openapi.command.WriteCommandAction;
 import com.intellij.openapi.project.Project;
+
 import java.nio.file.Path;
 import java.util.List;
 import java.util.Map;
