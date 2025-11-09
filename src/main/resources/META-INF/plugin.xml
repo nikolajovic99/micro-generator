@@ -1,15 +1,33 @@
-<!-- Plugin Configuration File. Read more: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html -->
 <idea-plugin>
     <id>com.github.nikolajovic99.microgenerator</id>
-    <name>micro-generator</name>
-    <vendor>nikolajovic99</vendor>
+    <name>MicroGenerator</name>
+    <vendor email="jovnikola99@gmail.com" url="https://github.com/nikolajovic99">
+        Nikola Jovic
+    </vendor>
+
+    <version>1.0.0</version>
+
+    <description>
+        MicroGenerator is an IntelliJ IDEA plugin that automatically generates
+        fully functional Spring Boot microservices based on a YAML specification.
+        It creates project structure, configuration files, entities, repositories,
+        DTOs, mappers, services, and REST controllers for each defined model.
+        Ideal for quickly scaffolding microservice architectures and accelerating
+        backend development.
+    </description>
 
     <depends>com.intellij.modules.platform</depends>
 
     <resource-bundle>messages.MyBundle</resource-bundle>
 
-    <extensions defaultExtensionNs="com.intellij">
-        <toolWindow factoryClass="com.github.nikolajovic99.microgenerator.toolWindow.MyToolWindowFactory" id="MyToolWindow"/>
-        <postStartupActivity implementation="com.github.nikolajovic99.microgenerator.startup.MyProjectActivity" />
-    </extensions>
+    <extensions defaultExtensionNs="com.intellij" />
+
+    <actions>
+        <action id="MicroGen.GenerateSkeleton"
+                class="com.github.nikolajovic99.microgenerator.actions.GenerateSkeletonAction"
+                text="Generate Microservices from YAML"
+                description="Generates complete Spring Boot microservice projects from a YAML specification.">
+                <add-to-group group-id="ToolsMenu" anchor="last"/>
+        </action>
+    </actions>
 </idea-plugin>
