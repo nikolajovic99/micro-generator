@@ -1,0 +1,192 @@
+services:
+  - name: user_service
+    group: uns.ac.rs
+    artifact: user_service
+    version: 0.0.1
+    description: User service
+    dependencies:
+      - groupId: io.micrometer
+        artifactId: micrometer-registry-prometheus
+        scope: runtime
+      - groupId: com.github.loki4j
+        artifactId: loki-logback-appender
+        version: 1.4.0
+    port: 8081
+    database:
+      type: postgresql # postgresql | mysql | mariadb | oracle | sqlserver | mongodb
+      name: user_db
+      username: postgres
+      password: postgres
+    logging: INFO # INFO | TRACE | DEBUG | WARN | ERROR | FATAL
+    models:
+      - name: User
+        table: users
+        fields:
+          - name: username
+            type: String # byte, short, int, long, float, double, char, boolean, String, Byte, Short, Integer, Long, Float, Double, Character, Boolean
+          - name: password
+            type: String
+          - name: emailAddress
+            type: String
+          - name: firstName
+            type: String
+          - name: lastName
+            type: String
+          - name: isVerified
+            type: boolean
+          - name: failedLoginCount
+            type: int  
+  - name: accommodation_service
+    group: uns.ac.rs
+    artifact: accommodation_service
+    version: 0.0.1
+    description: Accommodation service
+    dependencies:
+      - groupId: io.micrometer
+        artifactId: micrometer-registry-prometheus
+        scope: runtime
+      - groupId: com.github.loki4j
+        artifactId: loki-logback-appender
+        version: 1.4.0
+    port: 8082
+    database:
+      type: postgresql
+      name: accommodation_db
+      username: postgres
+      password: postgres
+    logging: INFO
+    models:
+      - name: Accommodation
+        table: accommodations
+        fields:
+          - name: name
+            type: String
+          - name: host
+            type: String
+          - name: address
+            type: String
+          - name: city
+            type: String
+          - name: country
+            type: String
+          - name: minimumGuests
+            type: Integer
+          - name: maximumGuests
+            type: Integer
+      - name: Availability
+        table: availabilities
+        fields:
+          - name: isAvailable
+            type: boolean
+          - name: isReserved
+            type: boolean
+          - name: pricePerGuest
+            type: Double
+          - name: pricePerUnit
+            type: Double
+      - name: Facility
+        table: facilities
+        fields:
+          - name: name
+            type: String
+      - name: Photo
+        table: photos
+        fields:
+          - name: url
+            type: String  
+  - name: reservation_service
+    group: uns.ac.rs
+    artifact: reservation_service
+    version: 0.0.1
+    description: Reservation service
+    dependencies:
+      - groupId: io.micrometer
+        artifactId: micrometer-registry-prometheus
+        scope: runtime
+      - groupId: com.github.loki4j
+        artifactId: loki-logback-appender
+        version: 1.4.0
+    port: 8083
+    database:
+      type: postgresql
+      name: reservation_db
+      username: postgres
+      password: postgres
+    logging: INFO
+    models:
+      - name: Reservation
+        table: reservations
+        fields:
+          - name: guest
+            type: String
+          - name: host
+            type: String
+          - name: accommodationName
+            type: String
+          - name: numberOfGuests
+            type: Integer
+          - name: total_price
+            type: Double  
+  - name: rating_service
+    group: uns.ac.rs
+    artifact: rating_service
+    version: 0.0.1
+    description: Rating service
+    dependencies:
+      - groupId: io.micrometer
+        artifactId: micrometer-registry-prometheus
+        scope: runtime
+      - groupId: com.github.loki4j
+        artifactId: loki-logback-appender
+        version: 1.4.0
+    port: 8084
+    database:
+      type: postgresql
+      name: rating_db
+      username: postgres
+      password: postgres
+    logging: INFO
+    models:
+      - name: HostRating
+        table: host_ratings
+        fields:
+          - name: guest
+            type: String
+          - name: host
+            type: String
+          - name: rating
+            type: Integer
+      - name: AccommodationRating
+        table: accommodation_ratings
+        fields:
+          - name: guest
+            type: String
+          - name: rating
+            type: Integer  
+  - name: notification_service
+    group: uns.ac.rs
+    artifact: notification_service
+    version: 0.0.1
+    description: Notification service
+    dependencies:
+      - groupId: io.micrometer
+        artifactId: micrometer-registry-prometheus
+        scope: runtime
+      - groupId: com.github.loki4j
+        artifactId: loki-logback-appender
+        version: 1.4.0
+    port: 8085
+    database:
+      type: mongodb
+      name: notification_db
+    logging: INFO
+    models:
+      - name: Notification
+        table: notifications
+        fields:
+          - name: recipient
+            type: String
+          - name: message
+            type: String
+          - name: isRead
+            type: Boolean
