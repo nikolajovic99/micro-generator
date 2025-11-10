@@ -53,7 +53,7 @@ dependencies {
     }
 
     // Freemarker template engine
-    implementation("org.freemarker:freemarker:2.3.32")
+    implementation("org.freemarker:freemarker:2.3.34")
 
     implementation("org.yaml:snakeyaml:2.2")
 }
